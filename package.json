@@ -1,19 +1,19 @@
 {
-  "name": "nanode",
+  "name": "trove",
   "version": "0.0.0",
-  "description": "riak swarm node that manages a riak cluster",
+  "description": "riak swarm trove that manages a riak cluster node",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/test.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hortinstein/nanode.git"
+    "url": "https://github.com/hortinstein/trove.git"
   },
   "keywords": [
     "riak",
     "swarm",
-    ""
+    "trove"
   ],
   "author": "hortinstein",
   "license": "BSD",
