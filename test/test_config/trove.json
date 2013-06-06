@@ -1,5 +1,5 @@
 {
-	"name": "TEST-dyson2",
+	"name": "TEST-dyson0",
 	"user": "hortinstein",
 	"application_servers": ["90.2.2.21", "90.2.2.22"],
 	"storage_backend": "riak_kv_eleveldb_backend",
@@ -9,7 +9,7 @@
 	"type": "trove",
 	"passcookie": "justatestpasscookie",
 	"init": "true",
-	"master": "TEST-dyson0@198.211.117.41",
+	"master":"TEST-dyson0@198.211.102.14",
 	"host":"198.211.102.14",
 	"schematic": {
 		"troves": [{

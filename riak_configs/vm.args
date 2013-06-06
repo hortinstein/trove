@@ -1,5 +1,5 @@
 ## Name of the riak node
--name TEST-dyson2@198.211.102.14
+-name TEST-dyson0@198.211.102.14
 
 ## Cookie for distributed erlang.  All nodes in the same cluster
 ## should use the same cookie or they will not be able to communicate.

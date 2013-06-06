@@ -9,6 +9,12 @@ describe('trove configure',function () {
 		trove.config(config,function (e,r) {
 			console.log(e,r);
 			done();
+		});
+	});
+	it('should start a riak process',function (done) {
+		trove.start_node(config,function (e,r) {
+			console.log(e,r);
+			done();
 		})
-	})
+	});
 })
