@@ -13,12 +13,14 @@ describe('trove configure',function () {
 	});
 	it('should start a riak process',function (done) {
 		trove.start_node(config,function (e,r) {
+			e.should.equal(0);
 			console.log(e,r);
 			done();
 		})
 	});
 	it('should ping a riak process',function (done) {
 		trove.ping(function (e,r) {
+			e.should.equal(0);
 			console.log(e,r);
 			done();
 		})
@@ -26,6 +28,7 @@ describe('trove configure',function () {
 
 	it('should stop a riak process',function (done) {
 		trove.stop_node(function (e,r) {
+			e.should.equal(0);
 			done();
 		})
 	});
