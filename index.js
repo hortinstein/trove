@@ -43,12 +43,6 @@ trove.config = function(config, m_callback) {
 		args: './riak_configs/vm.args'
 	});
 	async.series([
-		// function(callback) {
-		// 	rust.setHostName(config.host, callback);
-		// },
-		// function(callback) {
-		// 	rust.setHandoffPort(config.port + 1, callback);
-		// },
 		function(callback) {
 			rust.setPBPort(config.port + 2, callback);
 		},
@@ -74,7 +68,7 @@ trove.config = function(config, m_callback) {
 
 
 trove.start_node = function(config, callback) {
-	if (config.master === ('riak@' + config.host)) {
+	if (config.master === config.host) {
 		console.log('master');
 		var cmd = spawn(riak_path, ['start']); // the second arg is the command options
 	} else {

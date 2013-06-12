@@ -4,24 +4,31 @@ var trove = require('../index.js');
 var should = require('should')
 
 describe('trove configure', function() {
-	this.timeout(500 * 1000);
 	it('should configure a node', function(done) {
 		trove.config(config, function(e, r) {
 			//console.log(e,r);
 			done();
 		});
 	});
+});
+
+describe('riak command processes', function() {
+	this.timeout(500 * 1000);
 	it('should start a riak process', function(done) {
 		trove.start_node(config, function(e, r) {
 			e.should.equal(0);
-			//console.log(e, r);
+			done();
+		})
+	});
+	it('should fail to start a riak process since one is running', function(done) {
+		trove.start_node(config, function(e, r) {
+			e.should.not.equal(0);
 			done();
 		})
 	});
 	it('should ping a riak process', function(done) {
 		trove.ping(function(e, r) {
 			e.should.equal(0);
-			//console.log(e, r);
 			done();
 		})
 	});
@@ -45,4 +52,4 @@ describe('trove configure', function() {
 			done();
 		})
 	});
-})
+});
