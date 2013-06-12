@@ -1,5 +1,5 @@
 {
-	"name": "TEST-dyson0",
+	"name": "riak",
 	"user": "hortinstein",
 	"application_servers": ["90.2.2.21", "90.2.2.22"],
 	"storage_backend": "riak_kv_eleveldb_backend",
@@ -9,19 +9,19 @@
 	"type": "trove",
 	"passcookie": "justatestpasscookie",
 	"init": "true",
-	"master":"TEST-dyson0@127.0.0.1",
-	"host":"198.211.102.14",
+	"master":"riak@127.0.0.1",
+	"host":"127.0.0.1",
 	"schematic": {
 		"troves": [{
-				"ip_address": "198.211.102.14",
+				"ip_address": "127.0.0.1",
 				"id": 216538
 			}, {
-				"ip_address": "198.211.117.41",
+				"ip_address": "127.0.0.1",
 				"id": 216539
 			}
 		],
 		"curator": {
-			"ip_address": "198.199.79.115",
+			"ip_address": "127.0.0.1",
 			"id": 216540
 		}
 	}

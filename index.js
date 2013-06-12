@@ -43,27 +43,30 @@ trove.config = function(config, m_callback) {
 		args: './riak_configs/vm.args'
 	});
 	async.series([
+		// function(callback) {
+		// 	rust.setHostName(config.host, callback);
+		// },
+		// function(callback) {
+		// 	rust.setHandoffPort(config.port + 1, callback);
+		// },
 		function(callback) {
-			rust.setHostName(config.host, callback);
-		},
-		function(callback) {
-			rust.setHandoffPort(config.port + 1, callback);
+			rust.setPBPort(config.port + 2, callback);
 		},
 		function(callback) {
 			rust.backend.setType(config.storage_backend, callback);
 		},
 		function(callback) {
-			rust.setNodeName(config.name + '@' + config.host, callback);
-		},
-		function(callback) {
-			rust.setHTTPPort(config.port, callback);
-		}
+			rust.setNodeName('riak@' + config.host, callback);
+		}//,
+		// function(callback) {
+		// 	rust.setHTTPPort(config.port, callback);
+		// }
 	], function(err, results) {
 		if (err) {
 			callback('ERROR', 'error writing to configuration file:' + results);
 		} else {
 			var cmd = spawn('cp', ['./riak_configs/app.config', './riak_configs/vm.args', riak_configs]); // the second arg is the command options
-			execute_command(cmd,m_callback)
+			execute_command(cmd, m_callback)
 		}
 
 	});
@@ -71,11 +74,11 @@ trove.config = function(config, m_callback) {
 
 
 trove.start_node = function(config, callback) {
-	if (config.master === (config.name + '@' + config.host)) {
-		//console.log('master');
+	if (config.master === ('riak@' + config.host)) {
+		console.log('master');
 		var cmd = spawn(riak_path, ['start']); // the second arg is the command options
 	} else {
-		//console.log('joiner');
+		console.log('joiner');
 		var cmd = spawn(riak_path, ['join', config.master]); // the second arg is the command options
 	};
 	execute_command(cmd, callback);
