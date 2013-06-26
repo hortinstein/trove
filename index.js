@@ -5,8 +5,8 @@ var util = require('util')
 var spawn = require('child_process').spawn
 
 
-var riak_path = '~/riak-1.3.0/bin/riak'
-var riak_configs = '~/riak-1.3.0/etc/'
+var riak_path = '/root/riak-1.3.0/bin/riak'
+var riak_configs = '/root/riak-1.3.0/etc/'
 
 var trove = {};
 module.exports = trove;
