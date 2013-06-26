@@ -6,6 +6,7 @@ var spawn = require('child_process').spawn
 
 
 var riak_path = '/root/riak-1.3.0/bin/riak'
+var riak_admin_path = '/root/riak-1.3.0/bin/riak-admin'
 var riak_configs = '/root/riak-1.3.0/etc/'
 
 var trove = {};
@@ -42,6 +43,10 @@ trove.config = function(config, m_callback) {
 		config: './riak_configs/app.config',
 		args: './riak_configs/vm.args'
 	});
+	//
+	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
+	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
+	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
 	async.series([
 		function(callback) {
 			rust.setPBPort(config.port + 2, callback);
@@ -73,7 +78,7 @@ trove.start_node = function(config, callback) {
 		var cmd = spawn(riak_path, ['start']); // the second arg is the command options
 	} else {
 		console.log('joiner');
-		var cmd = spawn(riak_path, ['join', config.master]); // the second arg is the command options
+		var cmd = spawn(riak_admin_path, ['join ', 'riak@'+config.master]); // the second arg is the command options
 	};
 	execute_command(cmd, callback);
 }
