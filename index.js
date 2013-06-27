@@ -49,23 +49,26 @@ trove.config = function(config, m_callback) {
 	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
 	async.series([
 		function(callback) {
-			rust.setPBPort(config.port + 2, callback);
-		},
-		function(callback) {
 			rust.backend.setType(config.storage_backend, callback);
 		},
 		function(callback) {
 			rust.setNodeName('riak@' + config.host, callback);
+		},
+		function(callback) {
+			rust.setPBIP(config.host, callback);
+		},
+		function(callback) {
+			rust.setHostName(config.host, callback);
 		}//,
 		// function(callback) {
 		// 	rust.setHTTPPort(config.port, callback);
 		// }
 	], function(err, results) {
 		if (err) {
-			callback('ERROR', 'error writing to configuration file:' + results);
+			callback('ERROR', 'error editing configuration:' + results);
 		} else {
 			var cmd = spawn('cp', ['./riak_configs/app.config', './riak_configs/vm.args', riak_configs]); // the second arg is the command options
-			execute_command(cmd, m_callback)
+			execute_command(cmd, m_callback);
 		}
 
 	});
@@ -90,6 +93,11 @@ trove.ping = function(callback) {
 
 trove.stop_node = function(callback) {
 	var cmd = spawn(riak_path, ['stop']); // the second arg is the command options
+	execute_command(cmd, callback);
+}
+
+trove.remove_ring_data = function(callback) {
+	var cmd = spawn('rm', [riak_path+' ../data/ring/*']); // the second arg is the command options
 	execute_command(cmd, callback);
 }
 

@@ -1,10 +1,13 @@
 var config = require('./test_config/trove.json');
 var trove = require('../index.js');
-
 var should = require('should')
+var os = require('os');
+
 
 describe('trove configure', function() {
 	it('should configure a node', function(done) {
+		config.host = os.hostname;X
+		console.log("Node IP: " + config.host);
 		trove.config(config, function(e, r) {
 			//console.log(e,r);
 			done();
@@ -14,6 +17,12 @@ describe('trove configure', function() {
 
 describe('riak command processes', function() {
 	this.timeout(500 * 1000);
+	it('should remove old ring data', function(done) {
+		trove.remove_ring_data(config, function(e, r) {
+			e.should.not.equal(0);
+			done();
+		})
+	});
 	it('should start a riak process', function(done) {
 		trove.start_node(config, function(e, r) {
 			e.should.equal(0);
