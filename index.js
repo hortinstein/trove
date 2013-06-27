@@ -5,9 +5,11 @@ var util = require('util')
 var spawn = require('child_process').spawn
 
 
-var riak_path = '/root/riak-1.3.0/bin/riak'
-var riak_admin_path = '/root/riak-1.3.0/bin/riak-admin'
-var riak_configs = '/root/riak-1.3.0/etc/'
+var riak_dir = '/root/riak-1.3.0/'
+var riak_path = riak_path+'bin/riak'
+var riak_admin_path = riak_path+'bin/riak-admin'
+var riak_configs = riak_path+'etc/'
+var riak_ring = riak_path+'data/ring'
 
 var trove = {};
 module.exports = trove;
@@ -97,7 +99,7 @@ trove.stop_node = function(callback) {
 }
 
 trove.remove_ring_data = function(callback) {
-	var cmd = spawn('rm', [riak_path+'/../data/ring/*']); // the second arg is the command options
+	var cmd = spawn('rm', [riak_dir+'data/ring/*']); // the second arg is the command options
 	execute_command(cmd, callback);
 }
 
