@@ -6,7 +6,7 @@ var os = require('os');
 
 describe('trove configure', function() {
 	it('should configure a node', function(done) {
-		config.host = os.hostname;
+		config.host = os.hostname();
 		console.log("Node IP: " + config.host);
 		trove.config(config, function(e, r) {
 			//console.log(e,r);
