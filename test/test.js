@@ -6,7 +6,7 @@ var os = require('os');
 
 describe('trove configure', function() {
 	it('should configure a node', function(done) {
-		config.host = os.hostname;X
+		config.host = os.hostname;
 		console.log("Node IP: " + config.host);
 		trove.config(config, function(e, r) {
 			//console.log(e,r);
@@ -18,8 +18,8 @@ describe('trove configure', function() {
 describe('riak command processes', function() {
 	this.timeout(500 * 1000);
 	it('should remove old ring data', function(done) {
-		trove.remove_ring_data(config, function(e, r) {
-			e.should.not.equal(0);
+		trove.remove_ring_data(function(e, r) {
+			e.should.equal(0);
 			done();
 		})
 	});

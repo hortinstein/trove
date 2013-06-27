@@ -97,7 +97,7 @@ trove.stop_node = function(callback) {
 }
 
 trove.remove_ring_data = function(callback) {
-	var cmd = spawn('rm', [riak_path+' ../data/ring/*']); // the second arg is the command options
+	var cmd = spawn('rm', [riak_path+'../data/ring/*']); // the second arg is the command options
 	execute_command(cmd, callback);
 }
 
