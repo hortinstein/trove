@@ -6,10 +6,10 @@ var spawn = require('child_process').spawn
 
 
 var riak_dir = '/root/riak-1.3.0/'
-var riak_path = riak_path+'bin/riak'
-var riak_admin_path = riak_path+'bin/riak-admin'
-var riak_configs = riak_path+'etc/'
-var riak_ring = riak_path+'data/ring'
+var riak_path = riak_dir+'bin/riak'
+var riak_admin_path = riak_dir+'bin/riak-admin'
+var riak_configs = riak_dir+'etc/'
+var riak_ring = riak_dir+'data/ring'
 
 var trove = {};
 module.exports = trove;
@@ -45,9 +45,7 @@ trove.config = function(config, m_callback) {
 		config: './riak_configs/app.config',
 		args: './riak_configs/vm.args'
 	});
-	//
-	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
-	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
+	
 	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
 	async.series([
 		function(callback) {
