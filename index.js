@@ -4,8 +4,9 @@ var fs = require('fs');
 var util = require('util')
 var spawn = require('child_process').spawn
 
+//this is the default for the swarmigin build script
+var riak_dir = '/home/swarmlicant/riak/'
 
-var riak_dir = '/root/riak-1.3.0/'
 var riak_path = riak_dir+'bin/riak'
 var riak_admin_path = riak_dir+'bin/riak-admin'
 var riak_configs = riak_dir+'etc/'
