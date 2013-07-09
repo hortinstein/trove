@@ -66,7 +66,7 @@ trove.config = function(config, m_callback) {
 		// }
 	], function(err, results) {
 		if (err) {
-			callback('ERROR', 'error editing configuration:' + results);
+			m_callback('ERROR', 'error editing configuration:' + results);
 		} else {
 			var cmd = spawn('cp', ['./riak_configs/app.config', './riak_configs/vm.args', riak_configs]); // the second arg is the command options
 			execute_command(cmd, m_callback);
