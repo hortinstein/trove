@@ -42,8 +42,10 @@ describe('riak command processes', function() {
 			done();
 		})
 	});
+	if('should build a test cluster of riak nodes',function (done) {
+		
+	})
 	it('should join a test cluster of riak nodes', function(done) {
-		//need to add code here to build cluser instead of doing it by hand. http://docs.basho.com/riak/latest/tutorials/fast-track/Building-a-Development-Environment/
 		trove.join_swarm(config,function(e, r) {
 			e.should.equal(0);
 			done();
