@@ -5,12 +5,12 @@ var util = require('util')
 var spawn = require('child_process').spawn
 
 //this is the default for the swarmigin build script
-var riak_dir = '/home/swarmlicant/riak/'
-
-var riak_path = riak_dir+'bin/riak'
-var riak_admin_path = riak_dir+'bin/riak-admin'
-var riak_configs = riak_dir+'etc/'
-var riak_ring = riak_dir+'data/ring'
+riak_dir = '/home/swarmlicant/riak/';
+	
+riak_path = riak_dir+'bin/riak'
+riak_admin_path = riak_dir+'bin/riak-admin'
+riak_configs = riak_dir+'etc/'
+riak_ring = riak_dir+'data/ring'
 
 var trove = {};
 module.exports = trove;
@@ -46,14 +46,13 @@ trove.config = function(config, m_callback) {
 		config: './riak_configs/app.config',
 		args: './riak_configs/vm.args'
 	});
-	
 	//http://docs.basho.com/riak/latest/cookbooks/Basic-Cluster-Setup/
 	async.series([
 		function(callback) {
 			rust.backend.setType(config.storage_backend, callback);
 		},
 		function(callback) {
-			rust.setNodeName('riak@' + config.host, callback);
+			rust.setNodeName(config.master_name +'@' + config.host, callback);
 		},
 		function(callback) {
 			rust.setPBIP(config.host, callback);
@@ -77,13 +76,12 @@ trove.config = function(config, m_callback) {
 
 
 trove.start_node = function(config, callback) {
-	if (config.master === config.host) {
-		console.log('master');
-		var cmd = spawn(riak_path, ['start']); // the second arg is the command options
-	} else {
-		console.log('joiner');
-		var cmd = spawn(riak_admin_path, ['join ', 'riak@'+config.master]); // the second arg is the command options
-	};
+	var cmd = spawn(riak_path, ['start']); // the second arg is the command options
+	execute_command(cmd, callback);
+}
+
+trove.join_swarm = function(config, callback) {
+	var cmd = spawn(riak_admin_path, ['cluster', 'join', config.master_name +'@' + config.master_host]); // the second arg is the command options
 	execute_command(cmd, callback);
 }
 

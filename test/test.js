@@ -2,7 +2,7 @@ var config = require('./test_config/trove.json');
 var trove = require('../index.js');
 var should = require('should')
 var os = require('os');
-
+var spawn = require('child_process').spawn
 
 describe('trove configure', function() {
 	it('should configure a node', function(done) {
@@ -38,6 +38,13 @@ describe('riak command processes', function() {
 	});
 	it('should ping a riak process', function(done) {
 		trove.ping(function(e, r) {
+			e.should.equal(0);
+			done();
+		})
+	});
+	it('should join a test cluster of riak nodes', function(done) {
+		//need to add code here to build cluser instead of doing it by hand. http://docs.basho.com/riak/latest/tutorials/fast-track/Building-a-Development-Environment/
+		trove.join_swarm(config,function(e, r) {
 			e.should.equal(0);
 			done();
 		})
