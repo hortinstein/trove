@@ -3,7 +3,13 @@ var fs = require('fs');
 
 var util = require('util')
 var spawn = require('child_process').spawn
+var events = require('events');
 
+eventEmitter.on('someOccurence', function(message){
+    console.log(message);
+});
+
+eventEmitter.emit('someOccurence', 'Something happened!');
 //this is the default for the swarmigin build script
 var riak_dir = '/home/swarmlicant/riak/';
 	
@@ -15,6 +21,8 @@ var riak_ring = riak_dir+'data/ring';
 var trove = {};
 module.exports = trove;
 
+
+var eventEmitter = new events.EventEmitter();
 
 var execute_command = function(cmd, callback) {
 	var stdout = '';
@@ -40,6 +48,16 @@ var execute_command = function(cmd, callback) {
 	});
 };
 
+//this may be called from a function or executed on require with set interval 
+var maintain = function(callback){
+    //check and fix riak if node is not running, emit event for log
+    
+    //publish metrics
+    
+    //contact curator with status
+    
+    //
+}
 
 trove.config = function(config, m_callback) {
 	var rust = require('rust')({
@@ -72,7 +90,9 @@ trove.config = function(config, m_callback) {
 		}
 
 	});
+    
 };
+
 
 
 trove.start_dev_nodes = function(callback) {
