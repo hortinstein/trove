@@ -10,7 +10,7 @@
 	"passcookie": "justatestpasscookie",
 	"init": "true",
 	"master_host":"127.0.0.1",
-	"master_name":"dev2",
+	"master_name":"dev3",
 	"host": "127.0.0.1",
 	"schematic": {
 		"troves": [{

@@ -1,5 +1,5 @@
 ## Name of the riak node
--name dev2@10.0.2.15
+-name dev3@10.0.2.15
 
 ## Cookie for distributed erlang.  All nodes in the same cluster
 ## should use the same cookie or they will not be able to communicate.
