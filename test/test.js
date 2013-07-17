@@ -17,6 +17,12 @@ describe('trove configure', function() {
 });
 
 describe('riak command processes', function() {
+	it('should set ulimit to 4096', function(done) {
+		trove.set_ulimit(4096,function(e, r) {
+			e.should.equal(0);
+			done();
+		})
+	});
 	this.timeout(500 * 1000);
 	it('should remove old ring data', function(done) {
 		trove.remove_ring_data(function(e, r) {
@@ -30,45 +36,48 @@ describe('riak command processes', function() {
 			done();
 		})
 	});
-	it('should fail to start a riak process since one is running', function(done) {
-		trove.start_node(config, function(e, r) {
+	// it('should fail to start a riak process since one is running', function(done) {
+	// 	trove.start_node(config, function(e, r) {
+	// 		e.should.not.equal(0);
+	// 		done();
+	// 	})
+	// });
+	// it('should ping a riak process', function(done) {
+	// 	trove.ping(function(e, r) {
+	// 		e.should.equal(0);
+	// 		done();
+	// 	})
+	// });
+	it('should build a test cluster of riak nodes',function (done) {
+		trove.start_dev_nodes(function(e, r) {
 			e.should.not.equal(0);
 			done();
 		})
-	});
-	it('should ping a riak process', function(done) {
-		trove.ping(function(e, r) {
-			e.should.equal(0);
-			done();
-		})
-	});
-	if('should build a test cluster of riak nodes',function (done) {
-		
 	})
-	it('should join a test cluster of riak nodes', function(done) {
+	it('should join a test cluster of riak nodes', function (done) {
 		trove.join_swarm(config,function(e, r) {
 			e.should.equal(0);
 			done();
 		})
 	});
 
-	it('should stop a riak process', function(done) {
-		trove.stop_node(function(e, r) {
-			e.should.equal(0);
-			done();
-		})
-	});
-	it('should fail at pinging stopped riak process', function(done) {
-		trove.ping(function(e, r) {
-			e.should.equal(1);
-			done();
-		})
-	});
+	// it('should stop a riak process', function (done) {
+	// 	trove.stop_node(function(e, r) {
+	// 		e.should.equal(0);
+	// 		done();
+	// 	})
+	// });
+	// it('should fail at pinging stopped riak process', function (done) {
+	// 	trove.ping(function(e, r) {
+	// 		e.should.equal(1);
+	// 		done();
+	// 	})
+	// });
 
-	it('should fail at killing raw erlang processes representing riak nodes', function(done) {
-		trove.killall_nodes(function(e, r) {
-			e.should.equal(1);
-			done();
-		})
-	});
+	// it('should fail at killing raw erlang processes representing riak nodes', function (done) {
+	// 	trove.killall_nodes(function(e, r) {
+	// 		e.should.equal(1);
+	// 		done();
+	// 	})
+	// });
 });

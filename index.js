@@ -1,15 +1,9 @@
 var async = require('async');
 var fs = require('fs');
-
 var util = require('util')
 var spawn = require('child_process').spawn
 var events = require('events');
 
-eventEmitter.on('someOccurence', function(message){
-    console.log(message);
-});
-
-eventEmitter.emit('someOccurence', 'Something happened!');
 //this is the default for the swarmigin build script
 var riak_dir = '/home/swarmlicant/riak/';
 	
@@ -18,11 +12,11 @@ var riak_admin_path = riak_dir+'bin/riak-admin';
 var riak_configs = riak_dir+'etc/';
 var riak_ring = riak_dir+'data/ring';
 
-var trove = {};
+//var trove = {};
+var trove = new events.EventEmitter();
 module.exports = trove;
 
 
-var eventEmitter = new events.EventEmitter();
 
 var execute_command = function(cmd, callback) {
 	var stdout = '';
@@ -57,6 +51,11 @@ var maintain = function(callback){
     //contact curator with status
     
     //
+}
+trove.start_trove = function(config, callback) {
+
+
+	setInterval(maintain,1000);
 }
 
 trove.config = function(config, m_callback) {
@@ -93,7 +92,10 @@ trove.config = function(config, m_callback) {
     
 };
 
-
+trove.set_ulimit = function(ulimit,callback) {
+	var cmd = spawn('bash ulimit', ['-n', ulimit]); // the second arg is the command options
+	execute_command(cmd, callback);
+};
 
 trove.start_dev_nodes = function(callback) {
 	var cmd = spawn('./test/dev_nodes_start.sh'); // the second arg is the command options
@@ -109,6 +111,22 @@ trove.join_swarm = function(config, callback) {
 	var cmd = spawn(riak_admin_path, ['cluster', 'join', config.master_name +'@' + config.master_host]); // the second arg is the command options
 	execute_command(cmd, callback);
 };
+trove.cluster_plan = function(config, callback) {
+	var cmd = spawn(riak_admin_path, ['cluster', 'plan']); // the second arg is the command options
+	execute_command(cmd, callback);
+};
+trove.cluster_commit = function(config, callback) {
+	var cmd = spawn(riak_admin_path, ['cluster', 'cluster_commit']); // the second arg is the command options
+	execute_command(cmd, callback);
+};
+
+trove.status = function(callback){
+	var request = require("request");
+		request.get({
+			uri: '127.0.0.1:8098',
+			timeout: 1000
+		},callback);
+}
 
 trove.ping = function(callback) {
 	var cmd = spawn(riak_path, ['ping']); // the second arg is the command options

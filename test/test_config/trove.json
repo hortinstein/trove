@@ -3,14 +3,14 @@
 	"user": "hortinstein",
 	"application_servers": ["90.2.2.21", "90.2.2.22"],
 	"storage_backend": "riak_kv_eleveldb_backend",
-	"port": 8090,
+	"port": 8098,
 	"init_cookie": "justatestcookie",
 	"username": "hortinstein",
 	"type": "trove",
 	"passcookie": "justatestpasscookie",
 	"init": "true",
 	"master_host":"127.0.0.1",
-	"master_name":"dev1",
+	"master_name":"dev2",
 	"host": "127.0.0.1",
 	"schematic": {
 		"troves": [{
