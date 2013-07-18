@@ -5,11 +5,11 @@
 #
 ##############################################################
 rm -rf /tmp/home/hortinstein/riak_dev/*
-rm -rf /home/hortinstein/riak_dev/dev/dev2/data/ring/*
-rm -rf /home/hortinstein/riak_dev/dev/dev3/riak_dev/dev/dev3/data/ring/*
-/home/hortinstein/riak_dev/dev/dev4/bin/riak start
-/home/hortinstein/riak_dev/dev/dev3/bin/riak start
-ps aux | grep beam
-/home/hortinstein/riak_dev/dev/dev3/bin/riak-admin cluster join dev4@127.0.0.1
-/home/hortinstein/riak_dev/dev/dev3/bin/riak-admin cluster plan
-/home/hortinstein/riak_dev/dev/dev3/bin/riak-admin cluster commit
+rm -rf /tmp/home/hortinstein/riak
+cp -r /home/hortinstein/riak_install/riak-1.4.0/dev/ /home/hortinstein/riak_dev/
+cp -r /home/hortinstein/riak_install/riak-1.4.0/rel/riak/ /home/hortinstein/
+/home/hortinstein/riak_dev/dev/dev1/bin/riak start
+/home/hortinstein/riak_dev/dev/dev2/bin/riak start
+/home/hortinstein/riak_dev/dev/dev2/bin/riak-admin cluster join dev1@127.0.0.1
+/home/hortinstein/riak_dev/dev/dev2/bin/riak-admin cluster plan
+/home/hortinstein/riak_dev/dev/dev2/bin/riak-admin cluster commit
