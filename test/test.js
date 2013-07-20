@@ -4,34 +4,34 @@ var should = require('should')
 var os = require('os');
 var spawn = require('child_process').spawn
 
-describe('trove configure', function() {
-	it('should configure a node', function(done) {
-		config.host = os.networkInterfaces().eth0[0].address; //should check here to ensure ip4
-		config.master = config.host;
-		console.log("Node IP: " + config.host);
-		trove.config(config, function(e, r) {
-			//console.log(e,r);
-			done();
-		});
-	});
+it('should alter config for local testing of node', function(done) {
+	config.host = os.networkInterfaces().eth0[0].address; //should check here to ensure ip4
+	config.master = config.host;
+	console.log("Node IP: " + config.host);
+	done();
+	
 });
 
-describe('riak command processes', function() {
+describe('shelled commands for mx',function () {
 	it('should set ulimit to 4096', function(done) {
 		trove.set_ulimit(4096,function(e, r) {
 			e.should.equal(0);
 			done();
 		})
 	});
-	this.timeout(500 * 1000);
+	
 	it('should remove old ring data', function(done) {
 		trove.remove_ring_data(function(e, r) {
 			e.should.equal(0);
 			done();
 		})
 	});
-	it('should start a riak process', function(done) {
-		trove.start_node(config, function(e, r) {
+});
+
+describe('riak command processes', function() {
+	this.timeout(500 * 1000);
+	it('should start a trove', function(done) {
+		trove.start_trove(config, function(e, r) {
 			e.should.equal(0);
 			done();
 		})
@@ -48,18 +48,19 @@ describe('riak command processes', function() {
 			done();
 		})
 	});
-	it('should provide a json status of riak process', function(done) {
+	it('should provide riak processes stats', function(done) {
 		trove.status(function(e, r) {
-			console.log(r);
+			e.should.equal(0);
 			done();
 		})
 	});
 
-
-	it('should stop a riak process', function (done) {
+	it('should stop a riak process and emit the event', function (done) {
+		trove.on('error',function (error) {
+			done();
+		})
 		trove.stop_node(function(e, r) {
 			e.should.equal(0);
-			done();
 		})
 	});
 	it('should fail at pinging stopped riak process', function (done) {

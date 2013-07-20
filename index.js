@@ -3,7 +3,7 @@ var fs = require('fs');
 var util = require('util')
 var spawn = require('child_process').spawn
 var events = require('events');
-
+var request = require('request');
 //this is the default for the swarmigin build script
 var riak_dir = '/home/swarmlicant/riak/';
 	
@@ -41,19 +41,28 @@ var execute_command = function(cmd, callback) {
 };
 
 //this may be called from a function or executed on require with set interval 
+// emits; 'error', 'log' 
 var maintain = function(callback){
-    //check and fix riak if node is not running, emit event for log
-    
-    //publish metrics
-    
-    //contact curator with status
-    
-    //
+	trove.ping(function (e,r) {
+		if (e){
+			console.log(e,r);
+			trove.emit('error', 'node is node responding to pings')
+		}
+	});
+
 }
 trove.start_trove = function(config, callback) {
-
-
-	setInterval(maintain,1000);
+	trove.config(config,function (e,r) {
+		if (e){
+			callback('ERROR',e);
+		} else{
+			trove.start_node(config,function (e,r) {
+				callback(e,r);
+			});
+			setInterval(maintain,5000);
+		}
+	});
+	
 }
 
 trove.config = function(config, m_callback) {
@@ -113,14 +122,6 @@ trove.cluster_commit = function(config, callback) {
 	execute_command(cmd, callback);
 };
 
-trove.status = function(callback){
-	var request = require("request");
-		request.get({
-			uri: '127.0.0.1:8098',
-			timeout: 1000
-		},callback);
-}
-
 trove.ping = function(callback) {
 	var cmd = spawn(riak_path, ['ping']); // the second arg is the command options
 	execute_command(cmd, callback);
@@ -140,3 +141,15 @@ trove.killall_nodes = function(callback) {
 	var cmd = spawn('killall', ['beam.smp']); // the second arg is the command options
 	execute_command(cmd, callback);
 };
+
+////////////BROKEN///////////////
+trove.status = function(callback){
+	request.get({
+		url: 'http://localhost:8098/stats',
+		timeout: 1000,
+		json:true
+	},function  (e,r,o) {
+		console.log(e,o);
+		callback(e,o)
+	});
+}

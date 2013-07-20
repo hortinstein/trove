@@ -24,6 +24,7 @@
     "process-monitor": "~0.3.0",
     "rust": "~0.1.6",
     "async": "~0.2.9",
+    "request": "*",
     "should": "~1.2.2"
   }
 }
