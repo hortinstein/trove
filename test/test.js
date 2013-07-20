@@ -48,18 +48,7 @@ describe('riak command processes', function() {
 			done();
 		})
 	});
-	it('should build a test cluster of riak nodes',function (done) {
-		trove.start_dev_nodes(function(e, r) {
-			e.should.equal(0);
-			done();
-		})
-	})
-	it('should join a test cluster of riak nodes', function (done) {
-		trove.join_swarm(config,function(e, r) {
-			e.should.equal(0);
-			done();
-		})
-	});
+
 
 	it('should stop a riak process', function (done) {
 		trove.stop_node(function(e, r) {

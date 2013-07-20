@@ -93,7 +93,7 @@ trove.config = function(config, m_callback) {
 };
 
 trove.set_ulimit = function(ulimit,callback) {
-	var cmd = spawn('bash ulimit', ['-n', ulimit]); // the second arg is the command options
+	var cmd = spawn('bash', ['-c', 'ulimit', '-n', ulimit]); // the second arg is the command options
 	execute_command(cmd, callback);
 };
 
