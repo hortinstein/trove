@@ -97,11 +97,6 @@ trove.set_ulimit = function(ulimit,callback) {
 	execute_command(cmd, callback);
 };
 
-trove.start_dev_nodes = function(callback) {
-	var cmd = spawn('./test/dev_nodes_start.sh'); // the second arg is the command options
-	execute_command(cmd, callback);
-};
-
 trove.start_node = function(config, callback) {
 	var cmd = spawn(riak_path, ['start']); // the second arg is the command options
 	execute_command(cmd, callback);
