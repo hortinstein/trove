@@ -48,6 +48,12 @@ describe('riak command processes', function() {
 			done();
 		})
 	});
+	it('should provide a json status of riak process', function(done) {
+		trove.status(function(e, r) {
+			console.log(r);
+			done();
+		})
+	});
 
 
 	it('should stop a riak process', function (done) {
