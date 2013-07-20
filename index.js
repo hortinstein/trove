@@ -21,8 +21,8 @@ module.exports = trove;
 var execute_command = function(cmd, callback) {
 	var stdout = '';
 	var stderr = '';
+	var data = ''
 	cmd.stdout.on('data', function(data) {
-		console.log('stdout: ' + data);
 		stdout = stdout + data;
 	});
 
@@ -34,6 +34,7 @@ var execute_command = function(cmd, callback) {
 	cmd.on('exit', function(code) {
 		console.log('child process exited with code ' + code);
 		if (code !== 0) {
+			console.log(stdout);
 			callback(code, stderr);
 		} else {
 			callback(code, stdout);
