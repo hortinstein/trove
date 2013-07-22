@@ -5,7 +5,7 @@ var spawn = require('child_process').spawn
 var events = require('events');
 var request = require('request');
 //this is the default for the swarmigin build script
-var riak_dir = '/home/hortinstein/riak/';
+var riak_dir = '/home/swarmlicant/riak/';
 	
 var riak_path = riak_dir+'bin/riak';
 var riak_admin_path = riak_dir+'bin/riak-admin';
@@ -58,6 +58,7 @@ trove.start_trove = function(config, callback) {
 			callback('ERROR',e);
 		} else{
 			trove.start_node(config,function (e,r) {
+				//needs to check and see if it is already part or can join the node
 				callback(e,r);
 			});
 			setInterval(maintain,5000);
