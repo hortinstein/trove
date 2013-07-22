@@ -5,13 +5,13 @@ var spawn = require('child_process').spawn
 var events = require('events');
 var request = require('request');
 //this is the default for the swarmigin build script
-var riak_dir = '/home/swarmlicant/riak/';
+var riak_dir = '/home/hortinstein/riak/';
 	
 var riak_path = riak_dir+'bin/riak';
 var riak_admin_path = riak_dir+'bin/riak-admin';
 var riak_configs = riak_dir+'etc/';
 var riak_ring = riak_dir+'data/ring';
-
+var trove_config = '';
 //var trove = {};
 var trove = new events.EventEmitter();
 module.exports = trove;
@@ -52,6 +52,7 @@ var maintain = function(callback){
 
 }
 trove.start_trove = function(config, callback) {
+	trove_config = config;
 	trove.config(config,function (e,r) {
 		if (e){
 			callback('ERROR',e);
@@ -144,12 +145,11 @@ trove.killall_nodes = function(callback) {
 
 ////////////BROKEN///////////////
 trove.status = function(callback){
+
 	request.get({
-		url: 'http://localhost:8098/stats',
-		timeout: 1000,
+		uri: 'http://'+trove_config.host+':'+trove_config.port+'/stats',
 		json:true
 	},function  (e,r,o) {
-		console.log(e,o);
-		callback(e,o)
+		callback(e,o);
 	});
 }

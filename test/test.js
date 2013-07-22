@@ -50,7 +50,6 @@ describe('riak command processes', function() {
 	});
 	it('should provide riak processes stats', function(done) {
 		trove.status(function(e, r) {
-			e.should.equal(0);
 			done();
 		})
 	});
