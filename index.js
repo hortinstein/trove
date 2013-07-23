@@ -129,6 +129,16 @@ trove.ping = function(callback) {
 	execute_command(cmd, callback);
 };
 
+
+trove.status = function(callback){
+    request.get({
+		uri: 'http://'+trove_config.host+':'+trove_config.port+'/stats',
+		json:true
+	},function  (e,r,o) {
+		callback(e,o);
+	});
+};
+
 trove.stop_node = function(callback) {
 	var cmd = spawn(riak_path, ['stop']); // the second arg is the command options
 	execute_command(cmd, callback);
@@ -143,14 +153,3 @@ trove.killall_nodes = function(callback) {
 	var cmd = spawn('killall', ['beam.smp']); // the second arg is the command options
 	execute_command(cmd, callback);
 };
-
-////////////BROKEN///////////////
-trove.status = function(callback){
-
-	request.get({
-		uri: 'http://'+trove_config.host+':'+trove_config.port+'/stats',
-		json:true
-	},function  (e,r,o) {
-		callback(e,o);
-	});
-}
