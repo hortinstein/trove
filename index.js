@@ -40,17 +40,21 @@ var execute_command = function(cmd, callback) {
 	});
 };
 
+
+
 //this may be called from a function or executed on require with set interval 
 // emits; 'error', 'log' 
 var maintain = function(callback){
 	trove.ping(function (e,r) {
 		if (e){
 			console.log(e,r);
-			trove.emit('error', 'node is node responding to pings')
+			trove.emit('error', 'node is node responding to pings');
+            
 		}
 	});
 
 }
+
 trove.start_trove = function(config, callback) {
 	trove_config = config;
 	trove.config(config,function (e,r) {
@@ -59,7 +63,8 @@ trove.start_trove = function(config, callback) {
 		} else{
 			trove.start_node(config,function (e,r) {
 				//needs to check and see if it is already part or can join the node
-				callback(e,r);
+				//
+                callback(e,r);
 			});
 			setInterval(maintain,5000);
 		}
@@ -115,6 +120,22 @@ trove.join_swarm = function(config, callback) {
 	var cmd = spawn(riak_admin_path, ['cluster', 'join', config.master_name +'@' + config.master_host]); // the second arg is the command options
 	execute_command(cmd, callback);
 };
+
+trove.is_cluster_member = function(callback){
+    trove.status(function (e,o){
+        if (e){
+            callback(e);
+        } else {
+            if (o.connected_nodes === []){
+                callback(null,"true");          
+            } else {
+                callback(null,"false");
+            }
+        }
+    });
+    
+};
+
 trove.cluster_plan = function(config, callback) {
 	var cmd = spawn(riak_admin_path, ['cluster', 'plan']); // the second arg is the command options
 	execute_command(cmd, callback);
@@ -128,7 +149,6 @@ trove.ping = function(callback) {
 	var cmd = spawn(riak_path, ['ping']); // the second arg is the command options
 	execute_command(cmd, callback);
 };
-
 
 trove.status = function(callback){
     request.get({
